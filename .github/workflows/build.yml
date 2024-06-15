@@ -29,6 +29,9 @@ jobs:
   frontend:
     name: Build and Push Frontend Docker Image
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout code
