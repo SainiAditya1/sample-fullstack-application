@@ -3,7 +3,7 @@ name: Build and Push backend
 on:
   push:
     branches:
-      - my-task
+      - master
 
 jobs:
   build-and-push-backend:
