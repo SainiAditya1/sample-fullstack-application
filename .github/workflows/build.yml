@@ -1,0 +1,41 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  backend:
+    name: Build and Push Backend Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to GitHub Packages
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
+      - name: Build and Push Backend Image
+        working-directory: backend
+        run: |
+          docker build -t docker.pkg.github.com/sainiaditya1/sample-fullstack-application/backend:latest .
+          docker push docker.pkg.github.com/sainiaditya1/sample-fullstack-application/backend:latest
+
+  frontend:
+    name: Build and Push Frontend Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to GitHub Packages
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
+      - name: Build and Push Frontend Image
+        working-directory: frontend
+        run: |
+          docker build -t docker.pkg.github.com/sainiaditya1/sample-fullstack-application/frontend:latest .
+          docker push docker.pkg.github.com/sainiaditya1/sample-fullstack-application/frontend:latest
